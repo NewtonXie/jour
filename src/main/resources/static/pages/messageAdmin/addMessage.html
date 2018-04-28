@@ -1,0 +1,133 @@
+<div class="modal fade" id="addContentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    新增推送信息
+                </h4>
+            </div>
+            <div class="register-box-body ">
+                <form role="form">
+                    <div class="form-group">
+                        <label>推送名称</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input id="name" name="name" type="text" class="form-control" placeholder="必填">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>推送的用户手机号</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <input id="mobile" name="name" type="text" class="form-control" placeholder="必填">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>cron表达式</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input id="cron" name="name" type="text" class="form-control" placeholder="选择填写">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>推送信息类型</label>
+                            <select id="type" name="role" class="form-control">
+                                <option value="0">向所有人推送</option>
+                                <option value="1">推送给单个用户</option>
+                                <option value="2">为不推送</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>推送的用户id</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <input id="pushUserId" name="name" type="text" class="form-control" placeholder="必填">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>上传内容</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <textarea id="content" class="form-control" placeholder="必填"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>备注</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input id="remark" name="name" type="text" class="form-control" placeholder="选择填写">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" onclick="addContent()">
+                            确定
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            取消
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#addContentModal').modal();
+    })
+    function addContent() {
+        var content = $("#content").val();
+        var mobile = $("#mobile").val();
+        var cron = $("#cron").val();
+        var type = $("#type").val();
+        var pushUserId = $("#pushUserId").val();
+        var remark = $("#remark").val();
+        var name = $("#name").val();
+        var url = "/admin/push";
+        if (!content){
+            return ;
+        }
+        $.ajax({
+                url: url,
+                data: {
+                    "content": content,
+                    "mobile": mobile,
+                    "cron": cron,
+                    "type": type,
+                    "pushUserId": pushUserId,
+                    "remark": remark,
+                    "name": name
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        console.log(data)
+                        $('#addContentModal').modal('hide');
+                    } else {
+                    }
+
+                }
+            }
+        );
+    }
+</script>

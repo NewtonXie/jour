@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gzcb.creditcard.dao.TJourMapper" >
+  <resultMap id="BaseResultMap" type="com.gzcb.creditcard.dao.entities.TJour" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="s_site" property="sSite" jdbcType="VARCHAR" />
+    <result column="jour" property="jour" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="INTEGER" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cron" property="cron" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, s_site, jour, created_at, created_by, updated_at, updated_by, count, type,name,cron
+  </sql>
+
+
+  <select id="selectAllJour" resultMap="BaseResultMap" parameterType="java.util.List">
+    select
+    <include refid="Base_Column_List" />
+    from t_jour
+    <where>
+    <if test="userId != null">
+      created_by = #{userId, jdbcType=INTEGER}and
+    </if>
+    <if test="type != null">
+      type = #{type, jdbcType=INTEGER} and
+    </if>
+    1=1
+    </where>
+    ORDER BY id DESC
+  </select>
+
+  <select id="selectAllTJourByPage" resultMap="BaseResultMap">
+    select
+    j.id,j.s_site,j.jour,j.created_at,j.created_by,j.count,j.type
+    from t_jour as j
+    <if test="mobile != null and mobile != ''">
+      RIGHT JOIN t_user as u
+      on  u.mobile like CONCAT('%',#{mobile},'%') AND
+      u.id = j.created_by
+    </if>
+    <if test="type != null ">
+      WHERE j.type = #{type, jdbcType=INTEGER}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_jour
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_jour
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gzcb.creditcard.dao.entities.TJour" >
+    insert into t_jour (id, s_site, jour,
+    created_at, created_by, updated_at,
+    updated_by, count, type,
+    cron, name)
+    values (#{id,jdbcType=INTEGER}, #{sSite,jdbcType=VARCHAR}, #{jour,jdbcType=VARCHAR},
+    #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP},
+    #{updatedBy,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{type,jdbcType=SMALLINT},
+    #{cron,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gzcb.creditcard.dao.entities.TJour" >
+    insert into t_jour
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sSite != null" >
+        s_site,
+      </if>
+      <if test="jour != null" >
+        jour,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="cron != null" >
+        cron,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sSite != null" >
+        #{sSite,jdbcType=VARCHAR},
+      </if>
+      <if test="jour != null" >
+        #{jour,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="cron != null" >
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gzcb.creditcard.dao.entities.TJour" >
+    update t_jour
+    <set >
+      <if test="sSite != null" >
+        s_site = #{sSite,jdbcType=VARCHAR},
+      </if>
+      <if test="jour != null" >
+        jour = #{jour,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="cron != null" >
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gzcb.creditcard.dao.entities.TJour" >
+    update t_jour
+    set s_site = #{sSite,jdbcType=VARCHAR},
+      jour = #{jour,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      type = #{type,jdbcType=SMALLINT},
+      cron = #{cron,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

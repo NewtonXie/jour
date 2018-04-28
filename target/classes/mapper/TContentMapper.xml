@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gzcb.creditcard.dao.TContentMapper" >
+  <resultMap id="BaseResultMap" type="com.gzcb.creditcard.dao.entities.TContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="INTEGER" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="INTEGER" />
+    <result column="cron" property="cron" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="push_user_id" property="pushUserId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content, created_at, created_by, updated_at, updated_by, cron, remark, type,
+    push_user_id,name
+  </sql>
+  <select id="selectAllContentByPage" resultMap="BaseResultMap" resultType="com.github.pagehelper.Page" parameterType="java.util.List">
+    select
+    <include refid="Base_Column_List" />
+    from t_content
+    <where>
+      <if test="createdAt != null">
+        created_at like CONCAT('%',#{createdAt},'%') and
+      </if>
+      <if test="type != null">
+      type = #{type,jdbcType=SMALLINT} and
+    </if>
+      1=1
+    </where>
+  </select>
+  <select id="selectMessage" resultMap="BaseResultMap" parameterType="java.util.List">
+    select  *
+    from t_content
+    WHERE
+    <if test="type != null" >
+      type = #{type,jdbcType=SMALLINT}  AND
+    </if>
+    1=1
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.gzcb.creditcard.dao.entities.TContent" >
+        insert into t_content (id, content, created_at,
+        created_by, updated_at, updated_by,
+        cron, remark, type,
+        push_user_id, name)
+        values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP},
+        #{createdBy,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=INTEGER},
+        #{cron,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT},
+        #{pushUserId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.gzcb.creditcard.dao.entities.TContent" >
+        insert into t_content
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="createdAt != null" >
+                created_at,
+            </if>
+            <if test="createdBy != null" >
+                created_by,
+            </if>
+            <if test="updatedAt != null" >
+                updated_at,
+            </if>
+            <if test="updatedBy != null" >
+                updated_by,
+            </if>
+            <if test="cron != null" >
+                cron,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="pushUserId != null" >
+                push_user_id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null" >
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                #{createdBy,jdbcType=INTEGER},
+            </if>
+            <if test="updatedAt != null" >
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null" >
+                #{updatedBy,jdbcType=INTEGER},
+            </if>
+            <if test="cron != null" >
+                #{cron,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="pushUserId != null" >
+                #{pushUserId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gzcb.creditcard.dao.entities.TContent" >
+        update t_content
+        <set >
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null" >
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                created_by = #{createdBy,jdbcType=INTEGER},
+            </if>
+            <if test="updatedAt != null" >
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null" >
+                updated_by = #{updatedBy,jdbcType=INTEGER},
+            </if>
+            <if test="cron != null" >
+                cron = #{cron,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="pushUserId != null" >
+                push_user_id = #{pushUserId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gzcb.creditcard.dao.entities.TContent" >
+        update t_content
+        set content = #{content,jdbcType=VARCHAR},
+            created_at = #{createdAt,jdbcType=TIMESTAMP},
+            created_by = #{createdBy,jdbcType=INTEGER},
+            updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            updated_by = #{updatedBy,jdbcType=INTEGER},
+            cron = #{cron,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            type = #{type,jdbcType=SMALLINT},
+            push_user_id = #{pushUserId,jdbcType=INTEGER},
+            name = #{name,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

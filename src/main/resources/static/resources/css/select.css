@@ -1,0 +1,23 @@
+select{
+  margin-top:20px;
+  font-family: "微软雅黑";
+  width: 180px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  border: 1px #1a1a1a solid;
+  border-radius: 5px;
+}
+option{
+  color: black;
+  background: #A6E1EC;
+  line-height: 20px;
+}
+select:focus{
+  border: 2px #ddd solid;
+  box-shadow: 0 0 15px 1px #dddddd;
+}
+option:hover{
+  background: #ebccd1;
+}
+

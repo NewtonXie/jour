@@ -1,0 +1,105 @@
+a {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.block {
+    padding: .25em .5em;
+    margin: .2em;
+    background-color: #fff;
+}
+
+.charts-wrapper {
+    min-width: 1200px;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.charts-options {
+    margin: 1em 0;
+}
+
+#table {
+    padding: 1em;
+}
+
+.page-wrapper {
+    text-align: center;
+}
+
+.page-button {
+    color: #333;
+    margin: 0 1em;
+    cursor: pointer;
+}
+.disable {
+    color: #999;
+    cursor: not-allowed;
+}
+
+.today {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.title {
+    font-size: 1.25em;
+}
+
+.circle-wrapper {
+    display: inline-block;
+    width: 20em;
+    height: 8em;
+    text-align: left;
+    border-radius: 4em;
+    box-shadow: 0 0 1em #999;
+    margin: 1em;
+    cursor: pointer;
+    transition: all .3s;
+}
+.circle-wrapper:hover {
+    -webkit-transform: translateY(-0.5em);
+    -moz-transform: translateY(-0.5em);
+    transform: translateY(-0.5em);
+}
+
+.circle {
+    float: left;
+    width: 8em;
+    height: 8em;
+    border-radius: 4em;
+    text-align: center;
+    box-shadow: 0 0 2em #999;
+    vertical-align: top;
+}
+
+.circle-icon {
+    display: inline-block;
+    margin-top: .1em;
+    font-size: 3em;
+}
+
+.circle-number {
+    display: inline-block;
+    margin-top: .5em;
+    font-size: 2.75em;
+    vertical-align: middle;
+}
+
+.circle-unit {
+    display: inline-block;
+    margin-top: 2.5em;
+    vertical-align: middle;
+}
+
+.history {
+    margin-top: 1em;
+}
+
+.history-chart {
+    display: inline-block;
+    width: 100%;
+    height: 400px;
+    box-sizing: border-box;
+    padding: 1em;
+}

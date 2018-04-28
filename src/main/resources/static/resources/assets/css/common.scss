@@ -1,0 +1,85 @@
+
+.el-menu, body, html {
+  height: 100%;
+}
+
+html,body,div,span {
+  margin: 0;
+  padding: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+.card-header {
+  color: #a66f6a;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.bgcolor-pending {
+  background-color: #418daf;
+}
+
+.bgcolor-progress {
+  background-color: #ffc125;
+}
+
+.bgcolor-complete {
+  background-color: #379653;
+}
+
+.bgcolor-overtime {
+  background-color: #c35e39;
+}
+
+/*针对表格的一些优化*/
+.pagination {
+  text-align: right;
+  margin: 20px;
+}
+
+.doc-list-table {
+  width: 100%;
+  border: none;
+}
+
+.doc-card {
+  margin-top: 20px;
+}
+
+/*实时统计的图标*/
+.stats-icon-sum > img {
+  width: 20px;
+  height: 23px;
+  vertical-align: text-bottom;
+}
+
+.stats-icon-no > img {
+  width: 31px;
+  height: 15px;
+  vertical-align: text-bottom;
+}
+
+.stats-icon-user > img {
+  width: 18px;
+  height: 23px;
+  vertical-align: text-bottom;
+}
+
+/*TableCard组建公共样式*/
+.table-card__title {
+  position: relative;
+}
+.table-card__header {
+  font-size: 17px;
+  font-weight: 600;
+  color: rgb(106, 79, 72);;
+  padding: 5px 0;
+}
+
+/*修改element-ui自带样式*/
+.el-card {
+  box-shadow: none;
+}
+.el-card__header {
+  padding: 15px 20px;
+}

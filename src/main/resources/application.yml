@@ -1,0 +1,71 @@
+#redis集群配置
+#myredis:
+#  pool:
+#    nodes : 181.137.128.153:7001,181.137.128.153:7002,181.137.128.153:7003,181.137.128.153:7004,181.137.128.153:7005,181.137.128.153:7006
+#    connectionTimeout : 3000
+#    soTimeout : 5000
+#    maxAttempts : 5
+#    passWord: 123456
+#  sentinel:
+#    master : xys151
+#    nodes : 181.137.128.151:6379
+
+server:
+  port: 8080
+
+spring:
+#  session:
+#        store-type: none
+#  thymeleaf:
+#        mode: HTML5
+#        encoding: UTF-8
+#        content-type: text/html
+#        cache: false
+#        prefix: classpath:/static/
+  http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+  datasource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://120.79.143.182:3306/xystest?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      max-idle: 10
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 10
+      validation-query: select 1
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-ev iction-runs-millis: 18800
+  #redis单机配置，springboot结合
+  redis:
+    database: 0
+    host: 120.79.143.182
+    port: 6379
+    timeout: 5000
+    password: 123xys
+
+
+
+logging:
+  level:
+    learning: debug
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+mybatis:
+  type-aliases-package: com.gzcb.creditcard
+  mapper-locations: classpath:mapper/*.xml
+
+
+
+
+

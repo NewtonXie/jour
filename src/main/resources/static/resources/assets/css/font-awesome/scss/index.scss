@@ -1,0 +1,10 @@
+[class^="el-icon-fa"], [class*=" el-icon-fa"] {
+  display: inline-block;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+};
+
+@import "font-awesome";
+$fa-css-prefix: el-icon-fa;

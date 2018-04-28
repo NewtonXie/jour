@@ -1,0 +1,50 @@
+.opt-btn {
+    display: inline-block;
+    margin-right: .4em;
+    margin-bottom: .5em;
+    padding: .25em .5em;
+    border-radius: .4em;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s ease-in-out;
+    color: #2e6da4;
+    border: none;
+    background-color: transparent;
+    box-shadow: 0 .2em .5em rgba(0, 192, 239, .75);
+}
+.opt-btn:hover {
+    color: #fff;
+    background-color: #00c0ef;
+    transform: translateY(.3em);
+    box-shadow: 0 0 0 rgba(0, 192, 239, .75);
+}
+
+.danger {
+    color: #ff5566;
+    box-shadow: 0 .2em .5em rgba(255, 85, 102, .75);
+}
+.danger:hover {
+    color: #fff;
+    background-color: #ff5566;
+    animation: wave .3s .3s ease-out;
+    box-shadow: 0 0 0 rgba(255, 85, 102, .75);
+}
+
+@keyframes wave {
+    12.5% {
+        transform: translateY(.3em) rotate(24deg);;
+    }
+    37.5% {
+        transform: translateY(.3em) rotate(-18deg);;
+    }
+    62.5% {
+        transform: translateY(.3em) rotate(12deg);;
+    }
+    87.5% {
+        transform: translateY(.3em) rotate(-6deg);;
+    }
+    0%, 25%, 50%, 100% {
+        transform: translateY(.3em) rotate(0deg);
+    }
+}

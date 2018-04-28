@@ -1,0 +1,189 @@
+<div class="modal modal-danger fade" id="mainAlertModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="mainAlertModalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-outline"
+                        onclick="javascript: $('#mainAlertModal').modal('hide')">
+                    确认
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ajaxPageWithParams(url, param, fn) {
+        var pageConditions = getPageConditions()
+        if (param) {
+            for (var key in param) {
+                pageConditions[key] = param[key]
+            }
+        }
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            data: JSON.stringify(pageConditions),
+            contentType: "application/json;charset=UTF-8",
+            url: url,
+            type: "POST",
+            async: true,
+            timeout: 5000,
+            dataType: 'json',
+            success: function (data) {
+                console.log("data:" + data);
+                var pageObj = null
+                var resultObj = null
+                if (typeof(data) == 'object') {
+                    pageObj = data.data;
+                    resultObj = data;
+                } else {
+                    resultObj = eval("(" + data + ")")
+                    pageObj = resultObj.data;
+                }
+                if (resultObj.code == 0) {
+                    $('#pageNo').val(pageObj.pageNum);
+                    $('#lastPage').val(pageObj.pages);
+                    $('#currPage').text(pageObj.pageNum);
+                    var totalPage = pageObj.pages;
+                    if (totalPage == 0) {
+                        totalPage = 1;
+                    }
+                    $('#totalPage').text(totalPage);
+                    $('#totalCount').text(pageObj.total);
+                    if (pageObj.pageNum == 1) {
+                        $('#firstPage').attr("disabled", "disabled");
+                        $('#prevPage').attr("disabled", "disabled");
+                    } else {
+                        $('#firstPage').removeAttr("disabled");
+                        $('#prevPage').removeAttr("disabled");
+                    }
+                    if (pageObj.pageNum == totalPage || totalPage == 1) {
+                        $('#nextPage').attr("disabled", "disabled");
+                        $('#endPage').attr("disabled", "disabled");
+                    } else {
+                        $('#nextPage').removeAttr("disabled");
+                        $('#endPage').removeAttr("disabled");
+                    }
+                    fn(pageObj.list);
+                } else {
+                    showMainTips(resultObj.msg)
+                }
+
+            }
+        });
+    }
+
+    function ajaxPage(url, fn) {
+        ajaxPageWithParams(url, null, fn)
+    }
+
+    function getPageConditions() {
+        var param = {};
+        var pageNum = $('#pageNo').val();
+        console.log("pageNum:"+pageNum)
+        var pageSize = $('#pageSize').val();
+        param["pageNum"] = pageNum;
+        param["pageSize"] = pageSize;
+        var pageConditions = $(".pageCondition");
+        if (pageConditions.size() > 0) {
+            pageConditions.each(function (index) {
+                var column = $(this).attr("column");
+                var columnType = $(this).attr("columnType");
+                var columnValue = $(this).attr("columnValue");
+                var operation = $(this).attr("operation");
+                var link = $(this).attr("link");
+                param["pageConditions[" + index + "].column"] = column;
+                param["pageConditions[" + index + "].columnType"] = columnType;
+                param["pageConditions[" + index + "].columnValue"] = columnValue;
+                param["pageConditions[" + index + "].operation"] = operation;
+                param["pageConditions[" + index + "].link"] = link;
+            });
+        }
+        var orderBy = $("#orderBy").val();
+        param["orderBy"] = orderBy;
+        console.log("JSON.stringify(param):"+JSON.stringify(param))
+        return param;
+    }
+
+    var operation = 1;
+
+    function firstPage() {
+        if ($('#firstPage').parent().attr("class") != "disabled") {
+            $('#pageNo').val("1");
+            operation = 1;
+            eval("(" + pageCallback + ")");
+        }
+    }
+
+    function prevPage() {
+        if ($('#prevPage').parent().attr("class") != "disabled") {
+            var pageNo = $('#pageNo').val() * 1;
+            pageNo = pageNo - 1;
+            if (pageNo < 1) {
+                pageNo = 1;
+            }
+            operation = 2;
+            $('#pageNo').val(pageNo);
+            eval("(" + pageCallback + ")");
+        }
+    }
+
+    function nextPage() {
+        if ($('#nextPage').parent().attr("class") != "disabled") {
+            var pageNo = $('#pageNo').val() * 1;
+            var lastPage = $('#lastPage').val() * 1;
+            pageNo = pageNo + 1;
+            if (pageNo > lastPage) {
+                pageNo = lastPage;
+            }
+            operation = 3;
+            $('#pageNo').val(pageNo);
+            eval("(" + pageCallback + ")");
+        }
+    }
+
+    function lastPage() {
+        if ($('#endPage').parent().attr("class") != "disabled") {
+            $('#pageNo').val($('#lastPage').val());
+            operation = 4;
+            eval("(" + pageCallback + ")");
+        }
+    }
+    function showMainTips(message) {
+        $('#mainAlertModalText').html(message)
+        $('#mainAlertModal').modal()
+    }
+</script>
+<input id="pageNo" type="hidden" value="1">
+<input id="pageSize" type="hidden" value="15">
+<input id="lastPage" type="hidden" value="0">
+<div id="foot" class="glass-foot-div" style="width:100%;margin-top:0px;display: block">
+    <table width="100%">
+        <tr>
+            <td>
+                <div style="float:left">
+                    &nbsp;共<span id="totalPage">0</span>页-第<span id="currPage">0</span>页-共<span id="totalCount">0</span>条记录
+                </div>
+            </td>
+            <td>
+                <div style="float:right">
+                    <button id="firstPage" onclick="firstPage()" class="btn">首页</button>
+                    <button id="prevPage" onclick="prevPage()" class="btn">上一页</button>
+                    <button id="nextPage" onclick="nextPage()" class="btn">下一页</button>
+                    <button id="endPage" onclick="lastPage()" class="btn">尾页</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

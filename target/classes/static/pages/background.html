@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JOUR-管理后台</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport">
+    <link rel="shortcut icon" href="/resources/plugins/assets/img/favicon.ico">
+    <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="/resources/plugins/admin-lte/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/resources/plugins/admin-lte/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/resources/css/base.css">
+    <link rel="stylesheet" href="/resources/plugins/datepicker/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="/resources/plugins/admin-lte/css/select.css">
+    <link rel="stylesheet" href="/resources/css/amazeui.min.css">
+    <link rel="stylesheet" href="/resources/css/app.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span class="logo-mini"><b>JOUR</b></span>
+            <span class="logo-lg"><b>管理后台</b></span>
+        </a>
+
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+               role="button"> <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">欢迎进入管理系统</a></li>
+                    <li><a href="#">注销</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">菜单</li>
+
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-cube"></i> <span>数据管理</span>
+                        <span class="pull-right-container">
+                                 <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-circle-o"></i>用户上传内容监控
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="active"><a href="javascript:loadMenu('/pages/jourAdmin/showJourTable.html')"><i class="fa fa-circle-o"></i>数据统计</a></li>
+                                <li class="active"><a href="javascript:loadMenu('/pages/jourAdmin/showWarnJourTable.html')"><i class="fa fa-circle-o"></i>危险数据</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-circle-o"></i>推送数据查看
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="javascript:loadMenu('/pages/messageAdmin/showHistoryMessageTable.html')"><i class="fa fa-circle-o"></i>推送历史数据</a></li>
+                                <li><a href="javascript:loadMenu('/pages/messageAdmin/showMessageTable.html')"><i class="fa fa-circle-o"></i>手动推送消息</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-cube"></i> <span>用户管理</span>
+                        <span class="pull-right-container">
+                                 <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="javascript:loadMenu('/pages/userAdmin/showAllUserTable.html')"><i class="fa fa-circle-o"></i>用户查看
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+    </aside>
+
+    <div class="content-wrapper" id="main-content">
+    </div>
+    <footer class="main-footer"> &nbsp;</footer>
+
+</div>
+
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<script src="/resources/plugins/admin-lte/js/app.min.js"></script>
+
+<script src="/resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<!--<script src="/resources/js/echarts.js"></script>-->
+
+<script src="/resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<script src="/resources/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<!--<script src="/resources/plugins/chartjs/Chart.min.js"></script>-->
+
+<script src="/resources/plugins/flot/jquery.flot.min.js"></script>
+
+<script src="/resources/plugins/flot/jquery.flot.resize.min.js"></script>
+
+<script src="/resources/plugins/flot/jquery.flot.pie.min.js"></script>
+
+<script src="/resources/plugins/flot/jquery.flot.categories.min.js"></script>
+
+<script src="/resources/plugins/datepicker/bootstrap-datetimepicker.js"></script>
+
+<script src="/resources/plugins/datepicker/locales/bootstrap-datetimepicker.fr.js"></script>
+
+<script src="/resources/plugins/datepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script src="/resources/js/RSA2.js"></script>
+
+<script>
+    function loadMenu(path, parameter) {
+        $('#main-content').load(path, parameter);
+    }
+
+    $(function () {
+        var defaultPath = '/pages/jourAdmin/showJourTable.html';
+        loadMenu(defaultPath);
+    });
+
+    /***********************************websocket***********************************************/
+    var websocket = null;
+
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8080//ws//123");
+    } else {
+        console.log("浏览器不支持websocket");
+    }
+
+    websocket.onerror = function () {
+        console.log("websocket连接出错");
+    };
+
+    websocket.onopen = function () {
+        console.log("webscoket连接成功");
+    };
+    websocket.onclose = function () {
+        console.log("websocket连接关闭");
+    };
+    websocket.onmessage = function (event) {
+        var data = JSON.parse(event.data);
+        console.log(data)
+        console.log(data.data.name)
+    };
+
+</script>
+
+</body>
+</html>
