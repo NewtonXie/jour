@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>推送的用户手机号</label>
+                        <label>推送用户的手机号</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-star"></i>
@@ -47,11 +47,11 @@
                             <select id="type" name="role" class="form-control">
                                 <option value="0">向所有人推送</option>
                                 <option value="1">推送给单个用户</option>
-                                <option value="2">为不推送</option>
+                                <option value="2">保存</option>
                             </select>
                     </div>
                     <div class="form-group">
-                        <label>推送的用户id</label>
+                        <label>推送用户的id</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-star"></i>
@@ -123,7 +123,9 @@
                     if (data.code == 0) {
                         console.log(data)
                         $('#addContentModal').modal('hide');
+                        getAllMessages();
                     } else {
+                        showTips("出现异常!");
                     }
 
                 }

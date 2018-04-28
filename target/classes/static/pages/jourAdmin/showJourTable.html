@@ -143,7 +143,7 @@
         console.log("params:"+JSON.stringify(params))
         ajaxPageWithParams(cronUrl, params, function (data) {
             $('#table tbody').empty();
-            console.log("mobile:::"+data[0].mobile)
+            console.log("name:::"+data)
             for (var i = 0; i < data.length; i++) {
                 var tr = '<tr>'
                 tr += '<td>' + data[i].id + '</td>'
@@ -192,6 +192,10 @@
             return '<span class="label label-info">向所有人推送</span>'
         else if (type == 1)
             return '<span class="label label-info">推送给单个用户</span>'
+        else if (type == 2)
+            return '<span class="label label-info">警告</span>'
+        else if (type == 3)
+            return '<span class="label label-info">用户备忘录</span>'
         else return ""
     }
 

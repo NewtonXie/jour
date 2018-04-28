@@ -15,7 +15,7 @@
     <result column="cron" property="cron" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, s_site, jour, created_at, created_by, updated_at, updated_by, count, type,name,cron
+    id, s_site, jour, created_at, created_by, updated_at, updated_by, count, type,cron,name
   </sql>
 
 

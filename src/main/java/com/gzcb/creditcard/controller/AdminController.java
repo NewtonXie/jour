@@ -115,7 +115,11 @@ public class AdminController {
          * 固定上传者
          */
         tContent.setCreatedBy(1);
-        if (null!=userService.selectUser(mobile)){
+        if (null!=tContent.getType()&&tContent.getType()==1&&null!=userService.selectUser(mobile)){
+            tContent.setPushUserId(userService.selectUser(mobile).getId());
+            contentService.pushMessage(tContent);
+            return ResponseUtil.failed();
+        }else {
             contentService.pushMessage(tContent);
         }
         return ResponseUtil.succeed();
